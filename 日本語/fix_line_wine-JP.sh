@@ -39,12 +39,13 @@ echo -e "${GREEN}✓ 依存関係チェック完了${NC}\n"
 echo -e "${YELLOW}[2/4] Bottle/Prefix の Windows フォルダを選択してください${NC}"
 echo -e "ヒント: フォルダをこのターミナルにドラッグ＆ドロップするか、フルパスを入力してください。\n"
 
-WINDIR=""
-if [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; then
-    if command -v zenity &> /dev/null; then
-        WINDIR=$(zenity --file-selection --directory --title="Bottle の Windows フォルダを選択" 2>/dev/null || true)
-    elif command -v kdialog &> /dev/null; then
-        WINDIR=$(kdialog --getexistingdirectory "$HOME" --title "Bottle の Windows フォルダを選択" 2>/dev/null || true)
+if [ -z "${WINDIR}"]; then 
+    if [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; then
+        if command -v zenity &> /dev/null; then
+            WINDIR=$(zenity --file-selection --directory --title="Bottle の Windows フォルダを選択" 2>/dev/null || true)
+        elif command -v kdialog &> /dev/null; then
+            WINDIR=$(kdialog --getexistingdirectory "$HOME" --title "Bottle の Windows フォルダを選択" 2>/dev/null || true)
+        fi
     fi
 fi
 
