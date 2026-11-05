@@ -39,12 +39,13 @@ echo -e "${GREEN}✓ 必要依賴工具已齊備${NC}\n"
 echo -e "${YELLOW}[2/4] 請選擇或輸入 Bottle 的 Windows 資料夾路徑${NC}"
 echo -e "提示: 可直接拖曳資料夾至此終端機視窗，或貼上完整路徑\n"
 
-WINDIR=""
-if [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; then
-    if command -v zenity &> /dev/null; then
-        WINDIR=$(zenity --file-selection --directory --title="選擇 Bottle 的 Windows 資料夾" 2>/dev/null || true)
-    elif command -v kdialog &> /dev/null; then
+if [ -z "${WINDIR}" ]; then
+    if [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; then
+        if command -v zenity &> /dev/null; then
+            WINDIR=$(zenity --file-selection --directory --title="選擇 Bottle 的 Windows 資料夾" 2>/dev/null || true)
+        elif command -v kdialog &> /dev/null; then
         WINDIR=$(kdialog --getexistingdirectory "$HOME" --title "選擇 Bottle 的 Windows 資料夾" 2>/dev/null || true)
+        fi
     fi
 fi
 
